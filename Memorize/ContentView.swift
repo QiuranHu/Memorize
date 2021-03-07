@@ -8,13 +8,20 @@
 import SwiftUI
 
 struct ContentView: View { // ContentView behaves like a View.
+    var viewModel: EmojiMemoryGame
+    
     // The value of the body property is not store in memory.
     // Every time the system ask for the value of body,
     // the code in the curly brace gets executed.
     var body: some View {
         return HStack {
-            ForEach(0..<4) { index in
-                CardView(isFaceUp: false)
+            // Can put any iterable thing in ForEach,
+            // where the things that's iterating over
+            // are what is called identifiable.
+            ForEach(viewModel.cards) { card in
+                CardView(card: card).onTapGesture {
+                    viewModel.choose(card: card)
+                }
             }
         }
         .padding()
@@ -24,15 +31,15 @@ struct ContentView: View { // ContentView behaves like a View.
 }
 
 struct CardView: View {
-    var isFaceUp: Bool
+    var card: MemoryGame<String>.Card
     var body: some View {
         ZStack {
-            if isFaceUp {
-            RoundedRectangle(cornerRadius: 10.0).fill(Color.white)
-            RoundedRectangle(cornerRadius: 10.0).stroke(lineWidth: 3)
-            Text("👻")
+            if card.isFaceUp {
+                RoundedRectangle(cornerRadius: 10.0).fill(Color.white)
+                RoundedRectangle(cornerRadius: 10.0).stroke(lineWidth: 3)
+                Text(card.content)
             } else {
-            RoundedRectangle(cornerRadius: 10.0).fill()
+                RoundedRectangle(cornerRadius: 10.0).fill()
             }
         }
     }
@@ -40,6 +47,6 @@ struct CardView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(viewModel: EmojiMemoryGame())
     }
 }
