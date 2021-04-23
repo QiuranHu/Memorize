@@ -13,8 +13,11 @@ class EmojiMemoryGame {
     // private(set) means that only EmojiMemoryGame can modify the model, but everyone else can still see the model.
     
     static func createMemoryGame() -> MemoryGame<String> {
-        let emojis = ["👻", "😃", "😍"]
-        return MemoryGame<String>(numberOfPairsOfCards: emojis.count) { pairIndex in
+        let emojis = ["👻", "😃", "😍", "🥶", "🚩"]
+        let numberOfPairsOfCardsOptions = [2, 5]
+        let randomIndex = Int.random(in: 0...1)
+        let numberOfPairsOfCards = numberOfPairsOfCardsOptions[randomIndex]
+        return MemoryGame<String>(numberOfPairsOfCards: numberOfPairsOfCards) { pairIndex in
             return emojis[pairIndex]
         }
     }
