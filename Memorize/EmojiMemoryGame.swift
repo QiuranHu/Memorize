@@ -8,7 +8,7 @@
 import Foundation
 
 // ViewModel
-class EmojiMemoryGame {
+class EmojiMemoryGame: ObservableObject {
     // private means this model can only be accessed by EmojiMemoryGame.
     // private(set) means that only EmojiMemoryGame can modify the model, but everyone else can still see the model.
     
@@ -22,7 +22,7 @@ class EmojiMemoryGame {
         }
     }
     
-    private var model: MemoryGame<String> = EmojiMemoryGame.createMemoryGame()
+    @Published private var model: MemoryGame<String> = EmojiMemoryGame.createMemoryGame()
     
     // MARK: - Access to the Model
     var cards: Array<MemoryGame<String>.Card> {
